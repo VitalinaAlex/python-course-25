@@ -15,12 +15,15 @@ print(f"\033[32mGood day {name}! {today.strftime('%a,%b %d,%Y')} is a perfect da
 first_name='Vitalina'
 second_name="Aleksieienko"
 print(first_name,second_name)
+print("{} {}".format(first_name,second_name))
+print(f"{first_name} {second_name}")
 FIO = first_name + " " + second_name
 print(FIO)
 first_last=[first_name,second_name]
 separator=" "
 FIO_2 = separator.join(first_last)
-print(FIO_2)#Task 3
+print(FIO_2)
+#Task 3
 #Using python as a calculator.
 #Make a program with 2 numbers saved in separate variables a and b, then print the result for each of the following: 
 valueA=126

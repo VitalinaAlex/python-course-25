@@ -7,7 +7,8 @@
 from datetime import datetime
 name='Vitalina'
 today=datetime.now()
-print("\033[32mGood day",name,"!", today.strftime("%a,%b %d,%Y")," is a perfect day to learn some python.\033[0m")
+print("Good day {} ! {} is a perfect day to learn some python.".format(name,today.strftime("%a,%b %d,%Y")))
+print(f"\033[32mGood day {name}! {today.strftime('%a,%b %d,%Y')} is a perfect day to learn some python.\033[0m")
 #Task 2
 #Manipulate strings.
 #Save your first and last name as separate variables, then use string concatenation to add them together with a white space in between and print a greeting.

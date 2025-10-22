@@ -1,8 +1,7 @@
 """Task 1
 Write a decorator that prints a function with arguments passed to it.
 NOTE! It should print the function, not the result of its execution!"""
-"""For example:
-add called with 4, 5"""
+#add called with 4, 5
 
 def logger(func):
     def insidelogger(*args):
@@ -19,7 +18,7 @@ def square_all(*args):
     return [arg ** 2 for arg in args]
 
 print(add(2, 5))
-print(square_all(2, 5, 7, 8))
+print(square_all(2, 5, 7, 8, 9,58))
 
 """Task 2
 Write a decorator that takes a list of stop words and replaces them with * inside the decorated function"""
@@ -30,7 +29,9 @@ def stop_words(words: list):
             result = func(*args, **kwargs)
             sentense = result.split()
             newsentense = []
-            #word = sentense.split()
+            print(f"Sentense : {result}")
+            print(f"Words in sentense : {sentense}")
+            print(f"Stop words : {words}")
             for s in sentense:
                 if s.strip("!,.?").lower() in [w.lower() for w in words]:
                     newsentense.append("*")
@@ -46,10 +47,9 @@ def stop_words(words: list):
 def create_slogan(name: str) -> str:
     return f"{name} drinks pepsi in his brand new BMW!"
 
-create_slogan("quwyeuiyqi")
+create_slogan("Steve")
 
-"""assert create_slogan("Steve") == "Steve drinks * in his brand new *! """
-
+#assert create_slogan("Steve") == "Steve drinks * in his brand new *!
 
 """Task 3
 Write a decorator 'arg_rules' that validates arguments passed to the function.

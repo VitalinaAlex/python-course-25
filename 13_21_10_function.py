@@ -1,11 +1,12 @@
 """Example from lecture"""
 import math
-def make_cilinder_volume(r)
-  dev volume(h)
-    return   math.pi * r**2 * h
-  return volume
+def make_cilinder_volume(r):
+    def volume(h):
+        return   math.pi * r**2 * h
+    return volume
 
 volume_r10 =  make_cilinder_volume(10)
+print(f"Volume = {volume_r10(5)}")
 
 """Task 1
 Write a Python program to detect the number of local variables declared in a function."""

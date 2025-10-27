@@ -1,7 +1,14 @@
 """Task 1
 Write a decorator that prints a function with arguments passed to it.
 NOTE! It should print the function, not the result of its execution!"""
+"""For example:
+add called with 4, 5"""
+
+from tokenize import Name
+from unicodedata import name
+
 #add called with 4, 5
+
 
 def logger(func):
     def insidelogger(*args):
@@ -18,6 +25,7 @@ def square_all(*args):
     return [arg ** 2 for arg in args]
 
 print(add(2, 5))
+print(square_all(2, 5, 7, 8))
 print(square_all(2, 5, 7, 8, 9,58))
 
 """Task 2
@@ -47,9 +55,9 @@ def stop_words(words: list):
 def create_slogan(name: str) -> str:
     return f"{name} drinks pepsi in his brand new BMW!"
 
-create_slogan("Steve")
+create_slogan("quwyeuiyqi")
 
-#assert create_slogan("Steve") == "Steve drinks * in his brand new *!
+"""assert create_slogan("Steve") == "Steve drinks * in his brand new *! """
 
 """Task 3
 Write a decorator 'arg_rules' that validates arguments passed to the function.
@@ -61,22 +69,31 @@ contains: []  - list of symbols that an argument should contain"""
 
 def arg_rules(type_: type, max_length: int, contains: list):
     def decorator(func):
-        def wrapper(*args, **kwargs):
-            for symbol in contains:
-                if symbol not in text:
-                    print(f"Missing symbol: {symbol}")
+        def wrapper(arg):
             if not isinstance(arg, type_):
                 print("Type check failed")
-                return False
-            if len(some_string) > max_length or len(some_string)==0:
+                return False           
+            for symbol in contains:
+                if symbol not in arg:
+                    print(f"Missing symbol: {symbol}")
+                    return False
+            if len(arg) > max_length or len(arg)==0:
                 print("Too long or == 0!")
-            return wrapper
-        return decorator
-    pass
+                return False
+            result = func(arg)
+            print(result)
+            return result
+        return wrapper
+    return decorator
 
 @arg_rules(type_=str, max_length=15, contains=['05', '@'])
 def create_slogan(name: str) -> str:
     return f"{name} drinks pepsi in his brand new BMW!"
 
-assert create_slogan('johndoe05@gmail.com') is False, "False"
-assert create_slogan('S@SH05') == 'S@SH05 drinks pepsi in his brand new BMW!', "True"
+print(create_slogan('johndoe05@gmail.com'))
+create_slogan('johndoe05@gmail')
+print(create_slogan('S@SH06'))
+create_slogan('S@SH05')
+print("---- assert ----")
+assert create_slogan('johndoe05@gmail.com') is False
+assert create_slogan('S@SH05') == 'S@SH05 drinks pepsi in his brand new BMW!'

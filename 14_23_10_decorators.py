@@ -4,11 +4,7 @@ NOTE! It should print the function, not the result of its execution!"""
 """For example:
 add called with 4, 5"""
 
-from tokenize import Name
-from unicodedata import name
-
 #add called with 4, 5
-
 
 def logger(func):
     def insidelogger(*args):

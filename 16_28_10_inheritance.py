@@ -104,19 +104,24 @@ class ProductStore:
                 self.products = json.load(f)
         else:
             self.products = {}
-"""            
+            
     def add(self, product, amount):
-        pass
+        if product in self.products:
+            self.products[product]["amount"] += amount
+        else:
+            self.products[product] = {"amount": amount, "price": price}
+        self.save_data()
+    def get_all_products(self):
+        return self.products
+    """
     def set_discount(self, identifier, percent, identifier_type=’name’):
         pass
     def sell_product(self, product_name, amount):
         pass
     def get_income(self):
         pass
-    def get_all_products(self):
-        pass
     def get_product_info(self, product_name):
-        pass
+        pass"""
 
 p = Product('Sport', 'Football T-Shirt', 100)
 
@@ -130,7 +135,7 @@ s.add(p2, 300)
 
 s.sell_product('Ramen', 10)
 
-assert s.get_product_info('Ramen') == ('Ramen', 290)"""
+assert s.get_product_info('Ramen') == ('Ramen', 290)
 """
 Task 4
 Custom exception

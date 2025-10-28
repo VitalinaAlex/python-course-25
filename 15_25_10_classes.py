@@ -89,13 +89,13 @@ class TVController:
 CHANNELS = ["BBC", "Discovery", "TV1000","1+1", "ICTV", "NTN"]
 
 controller = TVController(CHANNELS)
-controller.first_channel() == "BBC"
-controller.last_channel() == "TV1000"
-controller.turn_channel(1) == "BBC"
-controller.next_channel() == "Discovery"
-controller.previous_channel() == "BBC"
-controller.current_channel() == "BBC"
-print(controller.exists(7)) == "No"
-print(controller.exists("BBC")) == "Yes"
-print(controller.exists(4)) == "Yes"
-print(controller.exists("TNT")) == "No"
+controller.first_channel()
+controller.last_channel()
+controller.turn_channel(1)
+controller.next_channel()
+controller.previous_channel()
+controller.current_channel()
+print(controller.exists(7))
+print(controller.exists("BBC"))
+print(controller.exists(4))
+print(controller.exists("TNT"))

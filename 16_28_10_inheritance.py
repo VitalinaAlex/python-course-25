@@ -91,58 +91,124 @@ import os
 
 class Product:
     def __init__(self, typeofproduct, name, price):
-        self.typeofproduct = typeofproduct
-        self.name = name
+        self.typeofproduct = typeofproduct.lower()
+        self.name = name.lower()
         self.price = price
 
 class ProductStore:
     def __init__(self):
         self.income = 0
         self.file_name = "store_data.json"
-        if os.path.exists(self.file_name):
+        if os.path.exists(self.file_name) and os.path.getsize(self.file_name) > 0:
             with open(self.file_name, "r") as f:
                 self.products = json.load(f)
         else:
             self.products = {}
             
     def add(self, product, amount):
-        if product in self.products:
-            self.products[product]["amount"] += amount
+        product.name = product.name.lower()
+    # Ціна з націнкою 30%
+        final_price = product.price * 1.3
+        if product.name in self.products:
+            self.products[product.name]["amount"] += amount
         else:
-            self.products[product] = {"amount": amount, "price": price}
+            self.products[product.name] = {
+                "type": product.typeofproduct,
+                "price": final_price,
+                "amount": amount
+            }
         self.save_data()
+
+    def save_data(self):
+        with open(self.file_name, "w") as f:
+            json.dump(self.products, f, indent=4)
+
     def get_all_products(self):
         return self.products
-    """
-    def set_discount(self, identifier, percent, identifier_type=’name’):
-        pass
+
     def sell_product(self, product_name, amount):
-        pass
+        product_name = product_name.lower()
+        if product_name not in self.products:
+            raise ValueError("Product not found")
+        if self.products[product_name]["amount"] <= amount:
+            raise ValueError("Not enough items in stock")
+        self.products[product_name]["amount"] -= amount
+        self.income += self.products[product_name]["price"] * amount
+        self.save_data()
+
+
+    def set_discount(self, identifier, percent, identifier_type='name'):
+        ifnotfound = True
+        for product_name, info in self.products.items():
+            if identifier_type == 'name' and product_name.lower() == identifier.lower():
+                info["price"] *= (1 - percent / 100)
+                ifnotfound = False
+            elif identifier_type == 'type' and info["type"].lower() == identifier.lower():
+                info["price"] *= (1 - percent / 100)
+                ifnotfound = False
+        if ifnotfound:
+            raise ValueError(f"Product not found for {identifier_type}='{identifier}'")
+        self.save_data()
+
     def get_income(self):
-        pass
+        return self.income
+    
     def get_product_info(self, product_name):
-        pass"""
+        product_name = product_name.lower()
+        if product_name not in self.products:
+            raise ValueError("Product not found")
+        else:
+            amount = self.products[product_name]["amount"]
+            print(product_name,amount)
+            return (product_name, amount)
 
-p = Product('Sport', 'Football T-Shirt', 100)
-
+p1 = Product('Sport', 'Football T-Shirt', 100)
+print(p1.typeofproduct,p1.name,p1.price)
 p2 = Product('Food', 'Ramen', 1.5)
-
+print(p2.typeofproduct,p2.name,p2.price)
+p3 = Product('Food', 'apple', 3)
+print(p3.typeofproduct,p3.name,p3.price)
 s = ProductStore()
 
-s.add(p, 10)
-
+s.add(p1, 10)
+print(s.products)
 s.add(p2, 300)
-
+print(s.products)
+s.add(p3, 21)
+print(s.products)
 s.sell_product('Ramen', 10)
+print(s.products)
+print(s.get_income())
+s.sell_product('apple', 10)
+print(s.products)
+print(s.get_income())
+s.set_discount("sport", 5, identifier_type='type')
+s.set_discount("ramen", 25, identifier_type='name')
+print("SALE")
+print(s.products)
 
-assert s.get_product_info('Ramen') == ('Ramen', 290)
-"""
-Task 4
+assert s.get_product_info('Ramen')
+
+"""Task 4
 Custom exception
 Create your custom exception named 'CustomException', you can inherit from base Exception class, but extend its functionality to log every error message to a file named 'logs.txt'. 
-Tips: Use __init__ method to extend functionality for saving messages to file
+Tips: Use __init__ method to extend functionality for saving messages to file"""
 
+from datetime import datetime
 
 class CustomException(Exception):
 
-def __init__(self, msg): """
+    LOG_FILE_NAME = 'log.txt'
+    
+    def __init__(self, msg):
+        logfile = open(self.LOG_FILE_NAME, 'a')
+        dt = datetime.now()
+        datetime.strftime(dt, '%H:%M:%S')
+        logfile.writelines([f"{dt}: {msg}\n"])
+        logfile.close()
+
+
+CustomException('Some error')
+CustomException('Another text')
+
+print(open('log.txt').read())

@@ -1,0 +1,27 @@
+{
+    "leggins": {
+        "type": "Sport",
+        "price": 86.24465606757808,
+        "amount": 40
+    },
+    "cheese": {
+        "type": "Food",
+        "price": 1.4625000000000001,
+        "amount": 1130
+    },
+    "apple": {
+        "type": "Food",
+        "price": 3.9000000000000004,
+        "amount": 351
+    },
+    "football t-shirt": {
+        "type": "Sport",
+        "price": 86.24465606757808,
+        "amount": 290
+    },
+    "ramen": {
+        "type": "Food",
+        "price": 0.26029357910156253,
+        "amount": 8440
+    }
+}

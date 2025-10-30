@@ -1,3 +1,4 @@
+from __future__ import annotations
 """Task 1
 Method overloading.
 Create a base class named Animal with a method called talk and then create two subclasses: 
@@ -64,6 +65,31 @@ Methods:
 All 3 classes must have a readable __repr__ and __str__ methods.
 Also, the book class should have a class variable which holds the amount of all existing books"""
 
+class Author:
+    def __init__(self, name, country, birthday):
+        self.name = name
+        self.country = country
+        self.birthday = birthday
+        self.books = []
+    
+    def __str__(self):
+        return self.name
+
+class Book:
+    book_count = 0
+    def __init__(self, name, year, author):
+        self.author = author
+        self.name = name
+        self.year = year
+        Book.book_count += 1
+        print(f"Кількість книжок {Book.book_count}. Додана книга {self.name},{author},{self.year}")
+    
+    def __repr__(self):
+        return f"Book('{self.name}', {self.year}, {self.author.name})"
+
+    def __str__(self):
+        return f"{self.name} ({self.year}) by {self.author.name}"
+
 class Library:
     def __init__(self, name):
         self.name = name
@@ -90,31 +116,6 @@ class Library:
                 result.append(b)
         return result
 
-class Book:
-    book_count = 0
-    def __init__(self, name, year, author):
-        self.author = author
-        self.name = name
-        self.year = year
-        Book.book_count += 1
-        print(f"Кількість книжок {Book.book_count}. Додана книга {self.name},{author},{self.year}")
-    
-    def __repr__(self):
-        return f"Book('{self.name}', {self.year}, {self.author.name})"
-
-    def __str__(self):
-        return f"{self.name} ({self.year}) by {self.author.name}"
-
-class Author:
-    def __init__(self, name, country, birthday):
-        self.name = name
-        self.country = country
-        self.birthday = birthday
-        self.books = []
-    
-    def __str__(self):
-        return self.name
-
 my_library = Library ("KPI")
 author1 = Author("king", "USA", "22-05-1980")
 book1 = my_library.new_book("Harry Potter", 1997, author1)
@@ -132,9 +133,73 @@ Fraction
 Потрібно додати магічні методи для математичних операцій та операції порівняння між об'єктами класу Fraction"""
 
 class Fraction:
-    pass
+    def __init__(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError ("the denominator cannot be equal to 0")
+
+        if (numerator < 0) != (denominator < 0):
+            self.numerator = -abs(numerator)
+        else:
+            self.numerator = abs(numerator)
+
+        self.denominator = abs(denominator)
+
+    def __add__(self, other: Fraction):
+        first_num = self.numerator
+        first_den = self.denominator
+        other_num = other.numerator
+        other_den = other.denominator
+        new_num = first_num*other_den+other_num*first_den
+        new_den = first_den*other_den
+        return Fraction(new_num, new_den)
+
+    def __sub__(self, other: Fraction):
+        first_num = self.numerator
+        first_den = self.denominator
+        other_num = other.numerator
+        other_den = other.denominator
+        new_num = first_num*other_den-other_num*first_den
+        new_den = first_den*other_den
+        return Fraction(new_num, new_den)
+
+    def __mul__(self, other: Fraction):
+        first_num = self.numerator
+        first_den = self.denominator
+        other_num = other.numerator
+        other_den = other.denominator
+        new_num = first_num*other_num
+        new_den = first_den*other_den
+        return Fraction(new_num, new_den)    
+    
+    def __truediv__(self, other: Fraction):
+        first_num = self.numerator
+        first_den = self.denominator
+        other_num = other.numerator
+        other_den = other.denominator
+        new_num = first_num*other_den
+        new_den = first_den*other_num
+        return Fraction(new_num, new_den)
+    
+    def __eq__(self, other: Fraction):
+        first_num = self.numerator
+        first_den = self.denominator
+        other_num = other.numerator
+        other_den = other.denominator
+        new_num = first_num*other_den
+        new_den = first_den*other_num
+        return self.numerator * other.denominator < self.denominator * other.numerator
+
+    def __str__(self):
+        return f"{self.numerator}/{self.denominator}"
+
 
 if __name__ == "__main__":
     x = Fraction(1, 2)
     y = Fraction(1, 4)
-    x + y == Fraction(3, 4)
+
+    print(x + y)
+    print(x - y)
+    print(y - x)
+    print(x * y)
+    print(x / y)
+    print (x == y)

@@ -187,7 +187,10 @@ class Fraction:
         other_den = other.denominator
         new_num = first_num*other_den
         new_den = first_den*other_num
-        return self.numerator * other.denominator < self.denominator * other.numerator
+        if new_num/new_den == 1:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return f"{self.numerator}/{self.denominator}"
@@ -195,7 +198,7 @@ class Fraction:
 
 if __name__ == "__main__":
     x = Fraction(1, 2)
-    y = Fraction(1, 4)
+    y = Fraction(1, 2)
 
     print(x + y)
     print(x - y)

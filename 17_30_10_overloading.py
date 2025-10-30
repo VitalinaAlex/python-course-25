@@ -197,7 +197,7 @@ class Fraction:
 
 
 if __name__ == "__main__":
-    x = Fraction(1, 2)
+    x = Fraction(-2, 3)
     y = Fraction(1, 2)
 
     print(x + y)

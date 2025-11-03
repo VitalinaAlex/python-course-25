@@ -4,9 +4,118 @@ The logic inside the `validate` method could be to check if the passed email par
 Email validations:
 Valid email address format 
 Email address """
-class Validate
+from string import ascii_letters, digits
 
- 
+class User:
+    ukrainian_letters = "абвгґдеєжзийіїклмнопрстуфхцчшщьюя-'"
+    ukrainian_letters_upper = ukrainian_letters.upper()
+    ukrainian = ukrainian_letters + ukrainian_letters_upper
+
+    def __init__(self, fio, email, city):
+        self.validate_fio(fio)
+        self.__fio = fio.split()
+        self.validate_email(email)
+        self.__email = email
+        self.__city = city
+
+    @property
+    def email(self):
+        return self.__email
+    
+    @email.setter
+    def email (self, email):
+        self.__email = email
+
+    @email.deleter
+    def email (self):
+        del self.__email
+
+    @property
+    def fio(self):
+        return self.__fio
+    
+    @fio.setter
+    def fio (self, fio):
+        self.__fio = fio
+
+    @fio.deleter
+    def fio (self):
+        del self.__fio
+
+    @classmethod
+    def validate_fio(cls, fio):
+        if type (fio) != str:
+            raise TypeError("FIO must be a string")
+        
+        f = fio.split()
+        if len(f) != 3:
+            raise TypeError("Wronf value FIO")
+        letters = ascii_letters + cls.ukrainian
+        for char in f:
+            if len (char.strip(letters)) != 0: 
+                raise TypeError("FIO:only symbols, apostrophe and hyphen")
+    
+    @classmethod
+    def validate_email(cls, email):
+        if type (email) != str:
+            raise TypeError("email must be a string")
+        
+        if '@' not in email:
+            raise TypeError("Email must have @")
+        f = email.split('@')
+        local_part, domain_part = email.split('@', 1)
+        
+        if len(f) < 2:
+            raise TypeError("email: Wronf value email (@)")
+        firstpartemail = ascii_letters + digits + '.-_'
+        for char in local_part:
+            if len (char.strip(firstpartemail )) != 0: 
+                raise TypeError("email: only symbols, digits and _-.")
+            
+        secondpartemail = ascii_letters + digits + '.-'
+        for char in domain_part:
+            if len (char.strip(secondpartemail)) != 0: 
+                raise TypeError("email: only symbols, digits and _-.")
+
+    def __str__(self):
+        return f"{self.fio}, email: {self.email}, city: {self.__city}"
+
+user1 = User("jhdsgjkjhkjh lkjglkjsljl ksdkgljlk", "jdfsjljjk@jkk.com","Kyiv")
+print(user1)
+try:
+    user2 = User("John Smith", "sub.example.co.uk", "London")
+except TypeError as e:
+    print("Error:", e)
+try:    
+    user3 = User("Іван Петренко2 ehhhhkjkj", "ivan2@example!com", "Київ")
+except TypeError as e:
+    print("Error:", e)
+try:    
+    user4 = User(123, 5454554, "London")
+except TypeError as e:
+    print("Error:", e)
+print("_________________EMAIL CHEKS_______________")
+
+user5 = User("Кузьменко-Пилипчук Мар'яна Михайлівна", "jdfsjljjk@jkk.com","Kyiv")
+print(user5)
+
+user6 = User("FIO lkjglkjsljl ksdkgljlk", "jdfsjljjk@jkk.com","Kyiv")
+print(user6)
+try:
+    user7 = User("FIO lkjglkjsljl ksdkgljlk", "sub.example.co.uk", "London")
+except TypeError as e:
+    print("Error:", e)
+try:    
+    user8 = User("Іван Петренко ehhhhkjkj", "ivan2@example!com", "Київ")
+except TypeError as e:
+    print("Error:", e)
+try:    
+    user9 = User("FIO lkjglkjsljl ksdkgljlk", 5454554, "London")
+except TypeError as e:
+    print("Error:", e)
+
+user10 = User("Кузьменко-Пилипчук Мар'яна Михайлівна", "qwerty_uiuiu@sub.example.co.uk","Kyiv")
+print(user10)
 
 """Task 2
 Implement 2 classes, the first one is the Boss and the second one is the Worker.
@@ -51,7 +160,7 @@ methods:"""
 
 "Don't forget to use @wraps"
 
-class TypeDecorators:
+"""class TypeDecorators:
 
     def to_int
 
@@ -78,4 +187,4 @@ def do_something(string: str):
 
 assert do_nothing('25') == 25
 
-assert do_something('True') is True
+assert do_something('True') is True"""

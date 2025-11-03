@@ -267,9 +267,9 @@ assert do_something('True') is True
 print(do_nothing('25'))
 print(type(do_nothing('25')))
 
-print(do_something('True'))     # True
-print(do_something('False'))    # False
-print(type(do_something('True'))) # <class 'bool'>
+print(do_something('True'))
+print(do_something('False'))
+print(type(do_something('True')))
 
 # Перевірки через assert (автотести)
 assert do_nothing('25') == 25

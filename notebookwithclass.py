@@ -22,7 +22,7 @@ class PhoneBooksShell(cmd.Cmd):
         create_contact(name=name, phone=phone, city=city)
 
 
-    def do_list_contacts(self, arg):
+    def do_list_contacts(self):
         """List all contacts in database"""
         contacts = list_contacts()
         for contact in contacts:

@@ -21,15 +21,15 @@ class FileOpen:
         if exc_type:
             print(f"[DEBUG log] {exc_type.__name__}: {exc_val}")
         return False
-
-with FileOpen("file.txt", "w") as f:
+file = "file.txt"
+with FileOpen(file, "w") as f:
     f.write("Hello!")
 
-with FileOpen("file.txt", "a") as f:
+with FileOpen(file, "a") as f:
     f.write("By!")
 
-with FileOpen("file.txt", "a") as f:
+with FileOpen(file, "a") as f:
     f.write("By-by!")
 
-with FileOpen("file.txt", "r") as f:
+with FileOpen(file, "r") as f:
     print(f.read())

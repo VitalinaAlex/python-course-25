@@ -48,17 +48,17 @@ class FileOpen:
         if exc_type:
             print(f"[DEBUG log] {exc_type.__name__}: {exc_val}")
         return False
-
-with FileOpen("file.txt", "w") as f:
+file = "file.txt"
+with FileOpen(file, "w") as f:
     f.write("Hello!")
 
-with FileOpen("file.txt", "a") as f:
+with FileOpen(file, "a") as f:
     f.write("By!")
 
-with FileOpen("file.txt", "a") as f:
+with FileOpen(file, "a") as f:
     f.write("By-by!")
 
-with FileOpen("file.txt", "r") as f:
+with FileOpen(file, "r") as f:
     print(f.read())
 
 """Task 2
@@ -74,19 +74,19 @@ class TestFileOpen(unittest.TestCase):
     @log_test
     def test_write_and_read(self):
         # створюємо і записуємо
-        with FileOpen("test.txt", "w") as f:
+        with FileOpen(file, "w") as f:
             f.write("Hello, world!")
 
         # читаємо
-        with FileOpen("test.txt", "r") as f:
+        with FileOpen(file, "r") as f:
             content = f.read()
         self.assertEqual(content, "Hello, world!")
     
     @log_test
     def test_counter(self):
         start = FileOpen.counter
-        with FileOpen("test.txt", "w"):
-            pass
+        with FileOpen(file, "w"):
+            return
         self.assertEqual(FileOpen.counter, start + 1)
 
     @log_test
@@ -94,7 +94,7 @@ class TestFileOpen(unittest.TestCase):
         print("[DEBUG log] file not found")
         with self.assertRaises(FileNotFoundError):
             with FileOpen("file_.txt", "r"):
-                pass
+                return
 
 if __name__ == "__main__":
     unittest.main()

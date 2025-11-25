@@ -82,7 +82,6 @@ def quick_sort(arr, limit=10):
 
     return quick_sort(left, limit) + middle + quick_sort(right, limit)
 
-# Генеруємо випадковий список
 list_size = 77
 random_list = [random.randint(0, 10000) for _ in range(list_size)]
 print("Вихідний список:", random_list)
@@ -111,6 +110,8 @@ sorted_quick = quick_sort(arr3, limit=limit)
 end_quick = time.time()
 print(f"⏱ quick_sort виконано за {end_quick - start_quick:.6f} секунд")
 print("Відсортований список ( quick_sort):", sorted_quick)
+result = min(end_snaker - start_snaker, end_sorted - start_sorted, end_quick - start_quick)
+print(f'⏱ {result:.6f} секунд - найшвидший час сортування серед трьох алгоритмів.')
 
 
 def timed_sort(func, arr, **kwargs):

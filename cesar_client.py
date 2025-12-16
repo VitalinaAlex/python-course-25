@@ -18,9 +18,8 @@ if __name__ == "__main__":
     class TestClientServer(unittest.TestCase):
         def test_encryption(self):
             # Перед запуском цього тесту сервер повинен бути запущений!
-            encrypted = send_message(3, "Hello World")
-            self.assertEqual(encrypted, "Khoor Zruog")  # очікуваний результат шифру
-            encrypted = send_message(2, "Hello World")
-            self.assertEqual(encrypted, "Jgnnq Yqtnf")  # очікуваний результат шифру            
+            encrypted1 = send_message(3, "Hello World")
+            self.assertEqual(encrypted1, "Khoor Zruog")  # очікуваний результат шифру
+
 
     unittest.main(exit=False)

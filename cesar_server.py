@@ -1,6 +1,6 @@
 import socket
 
-def caesar_cipher(text, key):
+def cesar_cipher(text, key):
     result = ""
     for char in text:
         if char.isalpha():
@@ -26,7 +26,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         key = int(lines[0])
         text = lines[1]
 
-        encrypted = caesar_cipher(text, key)
+        encrypted = cesar_cipher(text, key)
 
         conn.sendall(encrypted.encode())
         print("Encrypted message sent.")        
@@ -36,15 +36,15 @@ if __name__ == "__main__":
 
     class TestCaesarCipher(unittest.TestCase):
         def test_lowercase(self):
-            self.assertEqual(caesar_cipher("abc", 1), "bcd")
+            self.assertEqual(cesar_cipher("abc", 1), "bcd")
         
         def test_uppercase(self):
-            self.assertEqual(caesar_cipher("XYZ", 2), "ZAB")
+            self.assertEqual(cesar_cipher("XYZ", 2), "ZAB")
         
         def test_mixed(self):
-            self.assertEqual(caesar_cipher("Hello, World!", 3), "Khoor, Zruog!")
+            self.assertEqual(cesar_cipher("Hello, World!", 3), "Khoor, Zruog!")
         
         def test_negative_shift(self):
-            self.assertEqual(caesar_cipher("bcd", -1), "abc")
+            self.assertEqual(cesar_cipher("bcd", -1), "abc")
 
     unittest.main(exit=False)

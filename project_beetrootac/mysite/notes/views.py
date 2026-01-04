@@ -3,6 +3,7 @@ from .models import Note, Category
 from .forms import NoteForm
 from django.utils.timezone import now
 
+
 def index(request):
     notes = Note.objects.all()
 
@@ -32,11 +33,12 @@ def note_create(request):
         form = NoteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('notes:index')
     else:
         form = NoteForm()
 
     return render(request, 'notes/note_form.html', {'form': form})
+
 
 def note_detail(request, pk):
     note = get_object_or_404(Note, pk=pk)
@@ -45,7 +47,7 @@ def note_detail(request, pk):
         form = NoteForm(request.POST, instance=note)
         if form.is_valid():
             form.save()
-            return redirect('note_detail', pk=pk)
+            return redirect('notes:note_detail', pk=note.id)
     else:
         form = NoteForm(instance=note)
 
@@ -54,12 +56,14 @@ def note_detail(request, pk):
         'form': form
     })
 
+
 def note_delete(request, pk):
     note = get_object_or_404(Note, pk=pk)
 
     if request.method == 'POST':
         note.delete()
-        return redirect('index')
+        return redirect('notes:index')
 
     return render(request, 'notes/note_delete.html', {'note': note})
+
 # Create your views here.

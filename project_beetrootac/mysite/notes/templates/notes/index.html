@@ -6,12 +6,22 @@
 <body>
     <h1>Мої нотатки</h1>
 
+        <!-- створення нової нотатки -->
+        <div>
+            <h2>
+                <a href="{% url 'notes:note_create' %}">
+                    Створити нову нотатку
+                </a>
+            </h2>
+        </div>
+        <hr>
+
     {% for note in notes %}
         <div>
             <h2>
-                <a href="{% url 'note_detail' note.pk %}">
+                <a href="{% url 'notes:note_detail' note.id %}">
                     {{ note.title }}
-                </a>
+                </a>                
             </h2>            
             <p>{{ note.text }}</p>
             <p><strong>Категорія:</strong> {{ note.category.title }}</p>

@@ -8,7 +8,11 @@
 
     {% for note in notes %}
         <div>
-            <h2>{{ note.title }}</h2>
+            <h2>
+                <a href="{% url 'note_detail' note.pk %}">
+                    {{ note.title }}
+                </a>
+            </h2>            
             <p>{{ note.text }}</p>
             <p><strong>Категорія:</strong> {{ note.category.title }}</p>
 

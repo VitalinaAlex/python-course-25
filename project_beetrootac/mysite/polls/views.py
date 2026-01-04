@@ -14,15 +14,23 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
-
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = self.object
+
+        context['chart_data'] = {
+            'labels': [c.choice_text for c in question.choice_set.all()],
+            'data': [c.votes for c in question.choice_set.all()],
+        }
+        return context
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)

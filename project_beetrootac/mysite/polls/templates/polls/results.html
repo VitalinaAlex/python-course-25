@@ -1,21 +1,52 @@
 <nav>
-    <a href="/">Home</a> /
-    <a href="{% url 'polls:index' %}">Polls</a> /
-    Results
-  </nav>
-  
-  <hr>
-  
+  <a href="/">Home</a> /
+  <a href="{% url 'polls:index' %}">Polls</a> /
+  Results
+</nav>
+
 <h1>{{ question.question_text }}</h1>
+
+{{ chart_data|json_script:"poll-results-data" }}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div style="max-width: 400px; margin: 20px auto;">
+  <canvas id="resultsChart"></canvas>
+</div>
 
 <ul>
 {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+  <li>{{ choice.choice_text }} — {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
 {% endfor %}
 </ul>
+
+<script>
+  const dataElement = document.getElementById('poll-results-data');
+  const chartData = JSON.parse(dataElement.textContent);
+
+  const ctx = document.getElementById('resultsChart');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: chartData.labels,
+      datasets: [{
+        data: chartData.data,
+        backgroundColor: [
+          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+</script>
 
 <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
 <br>
 <a href="{% url 'polls:index' %}">← Back to polls</a>
-<br>
-<a href="/">← Home</a>
